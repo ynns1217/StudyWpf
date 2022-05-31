@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace WpfApp1
 {
@@ -16,7 +17,16 @@ namespace WpfApp1
 
         private void InitClass()
         {
+            Human driver = new Human
+            {
+                FirstName = "Nick",
+                HasDrivingLicense = true
+            };
+
             Car car = new Car();
+            car.Speed = 100;
+            car.Color = Colors.Tomato;
+            car.Driver = driver;
         }
     }
 }

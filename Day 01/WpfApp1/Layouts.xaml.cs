@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace WpfApp1
 {
     /// <summary>
-    /// Contact.xaml에 대한 상호 작용 논리
+    /// Layouts.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Contact : Page
+    public partial class Layouts : Page
     {
-        public Contact()
+        public Layouts()
         {
             InitializeComponent();
-        }
-
-        private void btnOK_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Hell,World!");
         }
     }
 }

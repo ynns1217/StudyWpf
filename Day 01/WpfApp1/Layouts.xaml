@@ -1,0 +1,63 @@
+﻿<Page x:Class="WpfApp1.Layouts"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Layouts">
+
+    <!--그리드와 캔버스 차이점 확인-->
+    <Grid>
+        <!--<Canvas Width="300" Height="300" Background="Orange">
+            <Button Content="Hello World" Margin="5" Canvas.Left="290" Canvas.Top="50" />
+        </Canvas>-->
+
+        <!--<Grid Width="300" Height="300" Background="Orange">
+            <Button Content="Hello World" Margin="5"/>
+        </Grid>-->
+        
+        <!--WrapPnel
+        Dockpanel.Dock-->
+
+        <!--<StackPanel Background="Orange" Margin="30" Orientation="Horizontal">
+            <Button Content="A" Canvas.Left="0" Canvas.Top="0"/>
+            <Button Content="B" Canvas.Left="0" Canvas.Top="25"/>
+            <Button Content="C" Canvas.Left="25" Canvas.Top="0"/>
+            <Button Content="D" Canvas.Left="50" Canvas.Top="0"/>
+        </StackPanel>-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Content="A"/> <!--한영역에 두개 같이 못넣음-->
+        <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="B"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+            <Button Content="C" Width="200"/>
+            <Button Content="D" Width="200"/>
+        </StackPanel>
+
+        <ListBox Height="100" Grid.Row="2" Grid.Column="1">
+            <Label Content="Element1"/>
+            <Label Content="Element2"/>
+            <GroupBox Content="Element23"/>
+        </ListBox>
+
+        <ComboBox Grid.Row="3" Grid.Column="1">
+            <Label Content="Element1"/>
+            <Label Content="Element2"/>
+            <GroupBox Content="Element23"/>
+        </ComboBox>
+        
+    </Grid>
+</Page>

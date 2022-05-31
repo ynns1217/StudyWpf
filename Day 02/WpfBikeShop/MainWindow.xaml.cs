@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfBikeShop
 {
     /// <summary>
-    /// Contact.xaml에 대한 상호 작용 논리
+    /// MainWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Contact : Page
+    public partial class MainWindow : Window
     {
-        public Contact()
+        public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnOK_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Hell,World!");
         }
     }
 }
