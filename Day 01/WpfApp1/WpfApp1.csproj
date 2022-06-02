@@ -60,6 +60,9 @@
       <DependentUpon>ProductManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProductsFactory.cs" />
+    <Compile Include="TeplatePage.xaml.cs">
+      <DependentUpon>TeplatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TwiceConverter.cs" />
     <Page Include="Bindings.xaml">
       <SubType>Designer</SubType>
@@ -100,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ProductManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TeplatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

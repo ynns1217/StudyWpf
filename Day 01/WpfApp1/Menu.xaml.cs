@@ -34,7 +34,7 @@ namespace WpfApp1
         {
             NavigationService.Navigate
                  (
-                 new Uri("/Bindings.xaml", UriKind.Relative)
+                 new Uri("/TeplatePage.xaml", UriKind.Relative)
                  );
         }
 
