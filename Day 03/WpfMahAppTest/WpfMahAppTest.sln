@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMahAppTest", "WpfMahAppTest.csproj", "{60A90FA2-A809-4D5D-8804-1268F79426EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60A90FA2-A809-4D5D-8804-1268F79426EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60A90FA2-A809-4D5D-8804-1268F79426EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60A90FA2-A809-4D5D-8804-1268F79426EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60A90FA2-A809-4D5D-8804-1268F79426EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66C7576C-ECCA-4910-A2D0-FFF010136A23}
+	EndGlobalSection
+EndGlobal
