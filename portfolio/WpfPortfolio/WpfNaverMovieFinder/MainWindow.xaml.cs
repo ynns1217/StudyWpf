@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -161,6 +162,25 @@ namespace WpfMahAppTest
                     imgPoster.Source = new BitmapImage(new Uri(movie.Image, UriKind.RelativeOrAbsolute));
                 }
             }
+        }
+
+        //네이버 영화 웹브라우저 열기
+        private void btnNaverMovie_Click(object sender, RoutedEventArgs e)
+        {
+            
+            //검색하고 선택 후 네이버 영화들어가기
+            if(grdResult.SelectedItems.Count == 0)
+            {
+                Commons.ShowMessageAsync("네이버 영화", "영화를 선택하세요");
+                return;
+            }
+            if (grdResult.SelectedItems.Count > 1)
+            {
+                Commons.ShowMessageAsync("네이버 영화", "영화를 하나만 선택하세요");
+                return;
+            }
+            string linkUrl = (grdResult.SelectedItem as MovieItem).Link;
+            Process.Start(linkUrl);
         }
     }
 }

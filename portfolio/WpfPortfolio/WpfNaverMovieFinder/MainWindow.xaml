@@ -120,6 +120,19 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+
+            <Button x:Name="btnNaverMovie" Content="네이버 영화" Margin="10"
+                    Width="150" FontSize="12" Click="btnNaverMovie_Click">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" Margin="10,0" />
+                            <iconPacks:PackIconForkAwesome Kind="Film"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+
         </StackPanel>
         
         
