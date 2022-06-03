@@ -82,7 +82,7 @@ namespace WpfMahAppTest
             {
                 request = WebRequest.Create(openApiUri);
                 request.Headers.Add("X-Naver-Client-Id",clientID); //중요
-                request.Headers.Add("X-Naver-Client-SEcret",clientSecret); //중요
+                request.Headers.Add("X-Naver-Client-Secret",clientSecret); //중요
 
                 response = request.GetResponse();
                 stream = response.GetResponseStream();
