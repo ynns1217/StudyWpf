@@ -24,3 +24,8 @@
 
 ![YoutubePlay](https://github.com/ynns1217/StudyWpf/blob/main/portfolio/WpfPortfolio/capture/youtube_trailer.png?raw=true)
 검색영화 예고편보기 실행화면
+
+<br/>
+
+<br/>
+
