@@ -8,7 +8,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:WpfMahAppTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1024" ResizeMode="NoResize" ShowTitleBar="True">
+        Title="MainWindow" Height="650" Width="1024" ResizeMode="NoResize" ShowTitleBar="True" Icon="naver_icon.png">
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
             <iconPacks:PackIconForkAwesome Kind="YoutubePlay" Margin="5,7,0,0"
@@ -75,6 +75,7 @@
         <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button x:Name="btnAddWatchList" Content="즐겨찾기 추가" Margin="10"
                     Width="150" FontSize="12" Click="btnAddWatchList_Click">
+                <!-- Style="{StyleResource 해서 안에 버튼 스타일 바꾸기 쉽다}"-->               
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
