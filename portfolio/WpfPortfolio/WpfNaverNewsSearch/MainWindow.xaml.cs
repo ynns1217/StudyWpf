@@ -1,11 +1,13 @@
 ﻿using MahApps.Metro.Controls;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Windows;
 using System.Windows.Input;
 
-namespace WpfNaverNewsSearch 
+namespace WpfNaverNewsSearch
 {
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리
@@ -32,7 +34,7 @@ namespace WpfNaverNewsSearch
             string keyword = txtSearch.Text;
             string clientID = "_spuQorY5ZmHUrSJL1fz";
             string clientSecret = "6AL8wofCD0";
-            string openApiUri = $"https://openapi.naver.com/v1/search/news.json?start=1&display=5&query={keyword}";
+            string openApiUri = $"https://openapi.naver.com/v1/search/news.json?start={txtStartNum.Text}&display=10&query={keyword}";
             string result;
 
             WebRequest request = null;
@@ -66,8 +68,51 @@ namespace WpfNaverNewsSearch
                 response.Close();
             }
 
-            MessageBox.Show(result);
+            //MessageBox.Show(result);        //결과 캡처 후 처리하기
+            var parsedJson = JObject.Parse(result);  //string to json
+
+            int total = Convert.ToInt32(parsedJson["total"]);       //전체 개수
+            int display = Convert.ToInt32(parsedJson["display"]);   //10
+
+            var items = parsedJson["items"];
+            JArray json_array = (JArray)items;      //데이터그리드와 연동
+
+            List<NewsItem> newsItems = new List<NewsItem>();
+           
+
+            foreach (var item in json_array)
+            {
+                var temp = DateTime.Parse(item["pubDate"].ToString());
+                NewsItem news = new NewsItem()
+                {
+                    Title = item["title"].ToString(),
+                    OriginalLink = item["originallink"].ToString(),
+                    Link = item["link"].ToString(),
+                    Description = item["description"].ToString(),
+                    PubDate = temp.ToString("yyyy-MM-dd HH:mm"),
+                };
+
+                newsItems.Add(news);
+            }
+            this.DataContext = newsItems;
 
         }
+
+        private void dgrResult_SelectedCellsChanged(object sender, System.Windows.Controls.SelectedCellsChangedEventArgs e)
+        {
+            if (dgrResult.SelectedItem == null) return;     //두번째 검색부터 오류 제거
+
+            string link = (dgrResult.SelectedItem as NewsItem).Link;
+            Process.Start(link);
+        }
+    }
+
+    internal class NewsItem
+    {
+        public string Title { get; set; }
+        public string OriginalLink { get; set; }
+        public string Link { get; set; }
+        public string Description { get; set; }
+        public string PubDate { get; set; }
     }
 }
