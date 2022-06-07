@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <!--<Label Content="Test" FontSize="20" Style="{StaticResource MahApps.Styles.Label}"/>-->
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <TextBox x:Name="txtSearch" Grid.Row="1" Grid.Column="1" Margin="5" 
+            <TextBox x:Name="txtSearch" Grid.Row="1" Grid.Column="1" Margin="5" Width="500"
                  mah:TextBoxHelper.AutoWatermark="True"
                  mah:TextBoxHelper.Watermark="뉴스 검색할 단어 입력"
                  mah:TextBoxHelper.UseFloatingWatermark="True"
