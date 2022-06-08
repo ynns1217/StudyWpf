@@ -4,9 +4,10 @@ using WpfCaliburnApp.ViewModels;
 
 namespace WpfCaliburnApp
 {
-
-    //시작 윈도우 지정하기 위한 클래스
-    class Bootstrapper : BootstrapperBase
+    /// <summary>
+    /// 시작 윈도우 지정☆☆
+    /// </summary>
+    public class Bootstrapper : BootstrapperBase
     {
         public Bootstrapper()
         {
