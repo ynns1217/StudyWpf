@@ -25,3 +25,8 @@ C#WPF 학습리포지토리
 
 ## Day 5일차
 - MVVM 패턴 학습 ( 디자인과 개발 완전 분리 )
+
+## Day 6d일차
+- Caliburn.Micro MVVM 학습
+- Bogus(FakeData, DummyData) 패키지 학습
+-  SmartHome 앱 만들기
