@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A1D2C91-F7A1-45B6-BF3E-53BFD20F0B1A}</ProjectGuid>
+    <ProjectGuid>{664355D3-E71A-4E42-A452-344EDCC60F37}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WPFSmartHomeMonitoringApp</RootNamespace>
     <AssemblyName>WPFSmartHomeMonitoringApp</AssemblyName>
