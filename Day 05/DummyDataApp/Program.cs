@@ -43,6 +43,12 @@ namespace DummyDataApp
 
             MqttThread = new Thread(() => LoopPublish());
             MqttThread.Start();     //스레드는 시작은 필요하지만 스탑은 필요없다
+
+            //Thread thread2 = new Thread(()=> LoopPublish2());
+            //MqttThread.Start();
+
+            //Thread thread3 = new Thread(() => LoopPublish3());
+            //MqttThread.Start();
         }
 
         private static void ConnectMqttBroker()
@@ -83,8 +89,10 @@ namespace DummyDataApp
                 CurrValue = JsonConvert.SerializeObject(tempValue, Formatting.Indented);
                 Client.Publish("home/device/fakedata/", Encoding.Default.GetBytes(CurrValue));
                 Console.WriteLine($"Published : {CurrValue}");
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
             }
         }
+
+
     }
 }

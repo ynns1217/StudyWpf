@@ -54,7 +54,7 @@
                                 <iconPacks:MaterialDesign Kind="PieChart"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem x:Name="LoadRealTimeHistoryView" Header="History">
+                        <MenuItem x:Name="LoadHistoryView" Header="History">
                             <MenuItem.Icon>
                                 <iconPacks:MaterialDesign Kind="ShowChart"/>
                             </MenuItem.Icon>

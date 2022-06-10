@@ -1,5 +1,9 @@
 ﻿using Caliburn.Micro;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -68,7 +72,7 @@ namespace WPFSmartHomeMonitoringApp.ViewModels
         public DataBaseViewModel()
         {
             BrokerUrl = Commons.BROKERHOST = "127.0.0.1"; //MQTT IP설정
-            Topic = Commons.PUB_TOPIC = "home/device/fakedata/";
+            Topic = Commons.PUB_TOPIC = "home/device/fakedata/";//Multiple Topic
             connString = Commons.CONNSTRING = "Data Source=PC01;Initial Catalog=OpenApiLab;Integrated Security=True;";
             if (Commons.IS_CONNECT )
             {
@@ -131,10 +135,65 @@ namespace WPFSmartHomeMonitoringApp.ViewModels
             DbLog += $"{message}\n";
         }
 
+
+        //Subscribe한 메시지 처리해주는 이벤트핸들러
         private void MQTT_CLIENT_MqttMsgPublishReceived(object sender,MqttMsgPublishEventArgs e)
         {
-            var meassage = Encoding.UTF8.GetString(e.Message);
-            UpdateText(meassage);
+            var message = Encoding.UTF8.GetString(e.Message);
+            UpdateText(message);   //센서데이터 출력
+            SetDataBase(message,e.Topic); //DB에 저장
+
+        }
+
+        private void SetDataBase(string message , string topic)
+        {
+            var currDatas = JsonConvert.DeserializeObject<Dictionary<string, string>>(message);
+            //
+
+            Debug.WriteLine(currDatas);
+
+            using (SqlConnection conn = new SqlConnection(ConnString))
+            {
+                conn.Open();
+                string strInQuery = @"INSERT INTO TblSmartHome
+                                               (Devid
+                                               ,CurrTime
+                                               ,Temp
+                                               ,Humid)
+                                         VALUES
+                                               (@Devid
+                                               ,@CurrTime
+                                               ,@Temp
+                                               ,@Humid)";
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand(strInQuery, conn);
+
+                    SqlParameter parmDevId = new SqlParameter("@DevId", currDatas["DevId"]);
+                    cmd.Parameters.Add(parmDevId);
+
+                    SqlParameter parmCurrTime = new SqlParameter("@CurrTime", DateTime.Parse(currDatas["CurrTime"]));   //날짜형 변환 필요
+                    cmd.Parameters.Add(parmCurrTime);
+
+                    SqlParameter parmTemp = new SqlParameter("@Temp", currDatas["Temp"]);
+                    cmd.Parameters.Add(parmTemp);
+
+                    SqlParameter parmHumid = new SqlParameter("@Humid", currDatas["Humid"]);
+                    cmd.Parameters.Add(parmHumid);
+
+                    if (cmd.ExecuteNonQuery() == 1)
+                        UpdateText(">>> DB Inserted.");     //저장성공
+                    else
+                        UpdateText(">>> DB Failed!!");      //저장 실패             
+
+                }
+                catch (Exception ex)
+                {
+
+                    UpdateText($">>> DB Error!! { ex.Message}");        //예외
+                }
+            }
 
         }
     }
