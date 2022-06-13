@@ -46,6 +46,7 @@
 - WPF ( .NET Framework 4.7.2 /C# )
   - M2Mqtt
   - MahApps.Metro
+  - OxyPlot.Wpf
   - Newtonsoft.Json
   - Caliburn.Micro
   - LiveCharts
@@ -54,3 +55,10 @@
 <br/>
 
 ![SmartHome](https://github.com/ynns1217/StudyWpf/blob/main/portfolio/WpfPortfolio/capture/SnartHome.png?raw=true)
+DB 모니터링 화면
+
+![RealtimeView](https://github.com/ynns1217/StudyWpf/blob/main/portfolio/WpfPortfolio/capture/RealTimeView.png?raw=true)
+실시간 센서 디스플레이
+
+![HistoryView](https://github.com/ynns1217/StudyWpf/blob/main/portfolio/WpfPortfolio/capture/wpf%20history.png?raw=true)
+세서값 시각화 및 프로그램 정보창
