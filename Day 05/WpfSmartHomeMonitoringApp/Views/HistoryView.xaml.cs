@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace WpfSmartHomeMonitoringApp.Views
+namespace WPFSmartHomeMonitoringApp.Views
 {
     /// <summary>
     /// RealTimeHistoryView.xaml에 대한 상호 작용 논리

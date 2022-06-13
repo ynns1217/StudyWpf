@@ -8,6 +8,7 @@ using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using WPFSmartHomeMonitoringApp.Helpers;
+using WPFSmartHomeMonitoringApp.Models;
 
 namespace WPFSmartHomeMonitoringApp.ViewModels
 {
@@ -149,6 +150,7 @@ namespace WPFSmartHomeMonitoringApp.ViewModels
         {
             var currDatas = JsonConvert.DeserializeObject<Dictionary<string, string>>(message);
             //
+
 
             Debug.WriteLine(currDatas);
 

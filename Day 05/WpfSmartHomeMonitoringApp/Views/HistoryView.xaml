@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfSmartHomeMonitoringApp.Views.HistoryView"
+﻿<UserControl x:Class="WPFSmartHomeMonitoringApp.Views.HistoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:oxy="http://oxyplot.org/wpf"
-             xmlns:local="clr-namespace:WpfSmartHomeMonitoringApp.Views"
+             xmlns:local="clr-namespace:WPFSmartHomeMonitoringApp.Views"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="1280" Background="WhiteSmoke">
     <Grid>
@@ -19,14 +19,14 @@
         <!--상단 아이콘 및 창 이름-->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
 
-            <iconPacks:PackIconZondicons Kind="Chart" VerticalAlignment="Center" Margin="10,0"
+            <iconPacks:PackIconMaterialDesign Kind="MultilineChart" VerticalAlignment="Center" Margin="10,0"
                                            RenderTransformOrigin="0.5,0.5" Foreground="DarkRed">
-                <iconPacks:PackIconZondicons.RenderTransform>
+                <iconPacks:PackIconMaterialDesign.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                     </TransformGroup>
-                </iconPacks:PackIconZondicons.RenderTransform>
-            </iconPacks:PackIconZondicons>
+                </iconPacks:PackIconMaterialDesign.RenderTransform>
+            </iconPacks:PackIconMaterialDesign>
 
             <Label Grid.Row="0" Grid.Column="0" Content="IoT Data Visualization"
                    Style="{StaticResource MahApps.Styles.Label}"
@@ -69,7 +69,7 @@
 
         <Grid Grid.Row="2" Grid.Column="0" Margin="15">
             <!-- 라이브 차트는 무료버전의 경우 값이 많아지면 렉 많이 걸림 ==> Oxy Plot 대체사용 -->
-            <oxy:PlotView Model="{Binding SmartHomeModel}"/>
+            <oxy:PlotView Model="{Binding HistoryModel}"/>
 
         </Grid>
     </Grid>

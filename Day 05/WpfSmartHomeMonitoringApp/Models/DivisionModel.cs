@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFSmartHomeMonitoringApp.Models
 {
-    class DivisionModel
+    public class DivisionModel
     {
         public int KeyVal { get; set; }
         public string DivisionVal { get; set; }
