@@ -14,30 +14,49 @@ namespace WPFSmartHomeMonitoringApp.ViewModels
     public class HistoryViewModel : Screen
     {
         private BindableCollection<DivisionModel> divisions;
-        private DivisionModel selectedDividion;
+        private DivisionModel selectedDivision;
         private string startDate;
         private string initStartDate;
         private string endDate;
         private string initEndDate;
-        private int totalcount;
-        private PlotModel historyModel;
+        private int totalCount;
+        private PlotModel historyModel; // OxyPlot : 220613, SMG. smartHomeModel -> historyModel 변경
 
         /*
-         * Divisions
-         * DivisionVal //DivisionModel 클래스
-         * SelectedDivision
-         * StartDate
-         * InitStartDate
-         * endDate
-         * initEndDate;
-         * totalcount
-         * historyModel
-         */
+             * Divisions
+             * DivisionVal // DivisionModel 클래스 
+             * SelectedDivision
+             * StartDate
+             * InitStartDate
+             * EndDate
+             * InitEndDate
+             * TotalCount
+             * SearchIoTData()
+             * HistoryModel
+             */
 
+        public BindableCollection<DivisionModel> Divisions
+        {
+            get => divisions;
+            set
+            {
+                divisions = value;
+                NotifyOfPropertyChange(() => Divisions);
+            }
+        }
+        public DivisionModel SelectedDivision
+        {
+            get => selectedDivision;
+            set
+            {
+                selectedDivision = value;
+                NotifyOfPropertyChange(() => SelectedDivision);
 
+            }
+        }
         public string StartDate
         {
-            get => startDate; 
+            get => startDate;
             set
             {
                 startDate = value;
@@ -46,191 +65,167 @@ namespace WPFSmartHomeMonitoringApp.ViewModels
         }
         public string InitStartDate
         {
-            get => initStartDate; 
+            get => initStartDate;
             set
             {
                 initStartDate = value;
                 NotifyOfPropertyChange(() => InitStartDate);
-
             }
         }
         public string EndDate
         {
-            get => endDate; 
+            get => endDate;
             set
             {
                 endDate = value;
                 NotifyOfPropertyChange(() => EndDate);
-
             }
         }
         public string InitEndDate
         {
-            get => initEndDate; 
+            get => initEndDate;
             set
             {
                 initEndDate = value;
                 NotifyOfPropertyChange(() => InitEndDate);
-
             }
         }
-        public int Totalcount
+        public int TotalCount
         {
-            get => totalcount; 
+            get => totalCount;
             set
             {
-                totalcount = value;
-                NotifyOfPropertyChange(() => Totalcount);
-
+                totalCount = value;
+                NotifyOfPropertyChange(() => TotalCount);
             }
         }
-        public PlotModel HistoryModel   //220613, SMG. smartHomeModel -> historyModel 변경
+        public PlotModel HistoryModel // 220613, SMG. smartHomeModel -> historyModel 변경
         {
-            get => historyModel; 
+            get => historyModel;
             set
             {
                 historyModel = value;
                 NotifyOfPropertyChange(() => HistoryModel);
-
-            }
-        }
-        public BindableCollection<DivisionModel> Divisions
-        {
-            get => divisions; 
-            set
-            {
-                divisions = value;
-                NotifyOfPropertyChange(() => Divisions);
-
-            }
-        }
-        public DivisionModel SelectedDividion
-        {
-            get => selectedDividion; 
-            set
-            {
-                selectedDividion = value;
-                NotifyOfPropertyChange(() => SelectedDividion);
-
             }
         }
 
         public HistoryViewModel()
         {
             Commons.CONNSTRING = "Data Source=PC01;Initial Catalog=OpenApiLab;Integrated Security=True;";
-            InitControl();
-
+            InitControl(); // 
         }
 
         private void InitControl()
         {
-            //DB없이 툴바에 넣기
-            Divisions = new BindableCollection<DivisionModel>   //콤보박스용 데이터 생성
+            Divisions = new BindableCollection<DivisionModel> // 콤보박스용 데이터 생성
             {
-                new DivisionModel{ KeyVal = 0, DivisionVal ="-- Select --" },
-            new DivisionModel { KeyVal = 1, DivisionVal = "DINNING" },
-            new DivisionModel { KeyVal = 2, DivisionVal = "LIVING" },
-            new DivisionModel { KeyVal = 3, DivisionVal = "BED" },
-            new DivisionModel { KeyVal = 4, DivisionVal = "BATH" },
-        };
-            //Select를 선택해서 초기화
-            selectedDividion = Divisions.Where(ValueTuple => ValueTuple.DivisionVal.Contains("Select")).FirstOrDefault();
+                new DivisionModel { KeyVal = 0, DivisionVal = "-- Select --" },
+                new DivisionModel { KeyVal = 1, DivisionVal = "DINNING" },
+                new DivisionModel { KeyVal = 2, DivisionVal = "LIVING" },
+                new DivisionModel { KeyVal = 3, DivisionVal = "BED" },
+                new DivisionModel { KeyVal = 4, DivisionVal = "BATH" },
+            };
+            // Select를 선택해서 초기화
+            SelectedDivision = Divisions.Where(v => v.DivisionVal.Contains("Select")).FirstOrDefault();
 
-            InitStartDate = DateTime.Now.ToShortDateString(); //2022-06-10
-            InitEndDate = DateTime.Now.AddDays(+1).ToShortDateString();//2022-06-11
+            InitStartDate = DateTime.Now.ToShortDateString(); // 2022-06-10
+            InitEndDate = DateTime.Now.AddDays(1).ToShortDateString(); // 2022-06-11
         }
 
-        //검색 메서드
+        // 검색 메서드
         public void SearchIoTData()
         {
-            if(selectedDividion.KeyVal == 0)      //Select
+            // Validation check 
+            if (SelectedDivision.KeyVal == 0) // Select
             {
                 MessageBox.Show("검색할 방을 선택하세요.");
                 return;
             }
 
-            if(DateTime.Parse(StartDate) > DateTime.Parse(EndDate))
+            if (DateTime.Parse(StartDate) > DateTime.Parse(EndDate))
             {
                 MessageBox.Show("시작일이 종료일보다 최신일 수 없습니다.");
                 return;
             }
 
-            totalcount = 0;
+            TotalCount = 0;
 
-            using(SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
+            using (SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
             {
-                string strQuery = @"SELECT Id, CurrTime, Temp, Humid
-                                    FROM  TblSmartHome
-                                    WHERE DevId = @DevId
-                                    AND CurrTime BETWEEN @StartDate AND @EndDate
-                                    ORDER BY Id ASC";
-
+                string strQuery = @"SELECT Id, DevId, CurrTime, Temp, Humid 
+                                      FROM TblSmartHome 
+                                     WHERE DevId = @DevId
+                                       AND CurrTime BETWEEN @StartDate AND @EndDate
+                                     ORDER BY Id ASC ";
                 try
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand(strQuery, conn);
-
-                    SqlParameter parmDevId = new SqlParameter("@DevId",SelectedDividion.DivisionVal);
+                    SqlParameter parmDevId = new SqlParameter("@DevId", SelectedDivision.DivisionVal);
                     cmd.Parameters.Add(parmDevId);
-
                     SqlParameter parmStartDate = new SqlParameter("@StartDate", StartDate);
                     cmd.Parameters.Add(parmStartDate);
-
                     SqlParameter parmEndDate = new SqlParameter("@EndDate", EndDate);
                     cmd.Parameters.Add(parmEndDate);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    var i = 0;
-                    //start of chart procee 220613 추가
-                    PlotModel tmp = new PlotModel { Title = $"{ SelectedDividion.DivisionVal} Histories"};     //임시 플롯모델
+                    int i = 0;
+                    // start of chart procee 220613 추가
+                    PlotModel tmp = new PlotModel
+                    {
+                        Title = $"{SelectedDivision.DivisionVal} Histroies",
+                        Subtitle = "using OxyPlot"
+                    }; // 임시 플롯모델
 
-
-                    LineSeries seriesTemp = new LineSeries 
-                    { 
-                        Color=OxyColor.FromRgb(200,100,100), 
-                        Title = "Temparature", 
-                        MarkerSize = 4,
-                        MarkerType= MarkerType.Circle
-                    }; //온도값을 라인 차트로 담을 객체
-
+                    var l = new Legend // 범례, OxyPlot.Wpf > LegendsDemo 참조
+                    {
+                        LegendBorder = OxyColors.Black,
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendPosition = LegendPosition.RightTop,
+                        LegendPlacement = LegendPlacement.Inside
+                    };
+                    tmp.Legends.Add(l);
+                    LineSeries seriesTemp = new LineSeries  // 온도값을 라인차트로 담을 객체
+                    {
+                        Color = OxyColor.FromRgb(255, 100, 100),
+                        Title = "Temperature",
+                        MarkerType = MarkerType.Circle
+                    };
                     LineSeries seriesHumid = new LineSeries
                     {
                         Color = OxyColor.FromRgb(150, 150, 255),
                         Title = "Humidity",
                         MarkerType = MarkerType.Triangle
                     };
-
-                    while(reader.Read())
+                    while (reader.Read())
                     {
-                        //var temp = reader["Temp"];
-                        //Temp,Humid 차트데이터를 생성
-                        seriesTemp.Points.Add(new DataPoint(i,Convert.ToDouble( reader["Temp"])));
-                        //seriesTemp.Points.Add(new DataPoint(i, Double.Parse.ToDouble( reader["Temp"].ToString)));
-                        seriesHumid.Points.Add(new DataPoint(i, Convert.ToDouble(reader["Humid"])));
+                        var model = new SmartHomeModel(); // 지우는게 나음
+                        model.DevId = reader["DevId"].ToString();
+                        model.CurrTime = DateTime.Parse(reader["CurrTime"].ToString());
+                        model.Temp = Convert.ToDouble(reader["Temp"]);
+                        model.Humid = Convert.ToDouble(reader["Humid"]);
 
+                        // var temp = reader["Temp"];
+                        // Temp, Humid 차트데이터를 생성
+                        seriesTemp.Points.Add(new DataPoint(i, model.Temp));
+                        seriesHumid.Points.Add(new DataPoint(i, model.Humid));
                         i++;
                     }
 
-                    Totalcount = i;     //검색한 데이터 총 개수
+                    TotalCount = i; // 검색한 데이터 총 개수
 
                     tmp.Series.Add(seriesTemp);
                     tmp.Series.Add(seriesHumid);
                     HistoryModel = tmp;
-                    //start of chart procee 220613
-
+                    // end of chart procee 220613 추가
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error {ex.Message}");
                     return;
-
-                    throw;
                 }
-
             }
-                 
-
         }
     }
 }
